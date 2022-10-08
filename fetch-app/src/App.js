@@ -15,12 +15,11 @@ const App = () => {
 
   const onSubmit = event => {
     console.log("Submitting...");
-    useFetchUrl(event.target.url.value);
-
+    useFetchUrl(url);
     event.preventDefault(); // 👈️ prevent page refresh
-    // 👇️ clear all input values in the form
     useUrl("");
   };
+
   const dataSource = [
     { name: data && data.name, isLoading: (isLoading && "TRUE") || "FALSE" }
   ];
@@ -61,11 +60,11 @@ const App = () => {
           open={open}
           onOk={() => {
             setOpen(false);
-            abort();
+            abort && abort();
           }}
           onCancel={() => {
             setOpen(false);
-            abort();
+            abort && abort();
           }}
           width={1000}
         >
@@ -76,6 +75,7 @@ const App = () => {
               type="text"
               name="url"
               onChange={event => useUrl(event.target.value)}
+              onPressEnter={event => useUrl(event.target.value)}
               placeholder={"Url to fetch"}
               value={url}
             />
