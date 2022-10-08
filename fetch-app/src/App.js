@@ -17,7 +17,7 @@ const App = () => {
     console.log("Submitting...");
     useFetchUrl(url);
     event.preventDefault(); // 👈️ prevent page refresh
-    useUrl("");
+    //useUrl("");
   };
 
   const dataSource = [
