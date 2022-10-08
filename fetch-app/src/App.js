@@ -1,4 +1,4 @@
-import { Button, Input, Modal, Table, Tag } from "antd";
+import { Button, Input, Modal, Table, Tag, Space } from "antd";
 import React, { useState } from "react";
 import useFetch from "react-fetch-hook";
 import "./App.css";
@@ -13,8 +13,8 @@ const App = () => {
     abortController: true
   });
 
-  const onSubmit = event => {
-    console.log("Submitting...");
+  const handleOnClick = event => {
+    console.log("ReFetching");
     useFetchUrl(url);
     event.preventDefault(); // 👈️ prevent page refresh
     //useUrl("");
@@ -68,24 +68,24 @@ const App = () => {
           }}
           width={1000}
         >
-          <form onSubmit={onSubmit} className="Form">
-            <label htmlFor="url">URL</label>
+          <Space>
             <Input
               id="url"
               type="text"
               name="url"
+              style={{ width: "30rem" }}
               onChange={event => useUrl(event.target.value)}
               onPressEnter={event => useUrl(event.target.value)}
               placeholder={"Url to fetch"}
               value={url}
             />
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" onClick={handleOnClick}>
               Fecth Url
             </Button>
             <Button type="danger" onClick={() => abort()}>
               Abort
             </Button>
-          </form>
+          </Space>
           <Table
             className="Table"
             pagination={false}
