@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import { Button, Modal } from "antd";
+import React, { useState } from "react";
+import useFetch from "react-fetch-hook";
+import "./App.css";
 
-function App() {
+const App = () => {
+  const [open, setOpen] = useState(false);
+  const fetchUrl = "https://swapi.dev/api/people/1";
+  const { isLoading, data, error, abort } = useFetch(fetchUrl, {
+    abortController: true
+  });
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <>
+      <main className="App">
+        <Button
+          type="primary"
+          onClick={() => setOpen(true)}
+          className="MainButton"
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          View Example
+        </Button>
+        <Modal
+          title="View Example"
+          centered
+          open={open}
+          onOk={() => setOpen(false)}
+          onCancel={() => setOpen(false)}
+          width={1000}
+        >
+          <p>isLoading: {(isLoading && "true") || "false"}</p>
+          <p>Name: {data && data.name}</p>
+          <Button type="danger" onClick={() => abort()}>
+            Abort
+          </Button>
+        </Modal>
+      </main>
+    </>
   );
-}
+};
 
 export default App;
