@@ -1,4 +1,4 @@
-import { Button, Modal } from "antd";
+import { Button, Input, Modal, Table, Tag } from "antd";
 import React, { useState } from "react";
 import useFetch from "react-fetch-hook";
 import "./App.css";
@@ -21,6 +21,30 @@ const App = () => {
     // 👇️ clear all input values in the form
     useUrl("");
   };
+  const dataSource = [
+    { name: data && data.name, isLoading: (isLoading && "TRUE") || "FALSE" }
+  ];
+
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+      render: data => <p>{data}</p>
+    },
+
+    {
+      title: "Loading",
+      key: "isLoading",
+      dataIndex: "isLoading",
+      render: isLoading => (
+        <Tag color={isLoading === "TRUE" ? "green" : "red"} key={isLoading}>
+          {isLoading}
+        </Tag>
+      )
+    }
+  ];
+
   return (
     <>
       <main className="App">
@@ -35,13 +59,19 @@ const App = () => {
           title="View Example"
           centered
           open={open}
-          onOk={() => setOpen(false)}
-          onCancel={() => setOpen(false)}
+          onOk={() => {
+            setOpen(false);
+            abort();
+          }}
+          onCancel={() => {
+            setOpen(false);
+            abort();
+          }}
           width={1000}
         >
-          <form onSubmit={onSubmit}>
-            <label htmlFor="url">URL to fetch:</label>
-            <input
+          <form onSubmit={onSubmit} className="Form">
+            <label htmlFor="url">URL</label>
+            <Input
               id="url"
               type="text"
               name="url"
@@ -49,13 +79,19 @@ const App = () => {
               placeholder={"Url to fetch"}
               value={url}
             />
-            <button type="submit">Fecth Url</button>
+            <Button type="primary" htmlType="submit">
+              Fecth Url
+            </Button>
+            <Button type="danger" onClick={() => abort()}>
+              Abort
+            </Button>
           </form>
-          <Button type="danger" onClick={() => abort()}>
-            Abort
-          </Button>
-          <p>isLoading: {(isLoading && "true") || "false"}</p>
-          <p>Name: {data && data.name}</p>
+          <Table
+            className="Table"
+            pagination={false}
+            columns={columns}
+            dataSource={dataSource}
+          />
         </Modal>
       </main>
     </>

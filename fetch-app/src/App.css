@@ -4,6 +4,27 @@
   text-align: center;
 }
 
+.Table {
+  margin-top: 20px;
+}
+
+.Form {
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.Form>* {
+  margin-right: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+
 .MainButton {
   margin-top: 150px;
 }
