@@ -1,14 +1,16 @@
 import React from "react";
-import useAxios from "axios-hook";
+
+import useAxios from "axios-hooks";
 
 export const Products = () => {
   console.log(`Products rendering@${new Date().getTime()}`);
   const { data, loading, error } = useAxios(
     {
-      url: "https://dummyjson.com/products"
+      url: "https://dummyjson.com/products",
     },
-    { useCache: false }
+    { manual: false }
   );
+  console.log(data && data);
 
   return <div>Products</div>;
 };
